@@ -1,0 +1,1286 @@
+<!doctype html>
+<html lang="en_hk">
+    <head>
+        <meta charset="utf-8">    
+        <!-- HTML Meta Tags -->
+        <title>Ocean Park 海洋公園</title>
+        <meta name="description" content="E-Tickets 電子門票">
+        <link rel="shortcut icon" href="https://www.oceanpark.com.hk/sites/all/themes/oceanpark/favicon.ico" type="image/ico" />
+
+        <!-- Google / Search Engine Tags -->
+        <meta itemprop="name" content="Ocean Park 海洋公園">
+        <meta itemprop="description" content="E-Tickets 電子門票">
+        <meta itemprop="image" content="https://media.oceanpark.com.hk/files/s3fs-public/ticket.jpg">
+
+        <!-- Facebook Meta Tags -->
+        <meta property="og:url" content="https://www.oceanpark.com.hk">
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="Ocean Park 海洋公園">
+        <meta property="og:description" content="E-Tickets 電子門票">
+        <meta property="og:image" content="https://media.oceanpark.com.hk/files/s3fs-public/ticket.jpg">
+
+        <!-- Twitter Meta Tags -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta name="twitter:title" content="Ocean Park 海洋公園">
+        <meta name="twitter:description" content="E-Tickets 電子門票">
+        <meta name="twitter:image" content="https://media.oceanpark.com.hk/files/s3fs-public/ticket.jpg">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale = 1.0, user-scalable=no">
+        <!-- Noto Sans TC Font -->
+        <link href="https://fonts.googleapis.com/css?family=Noto+Sans+TC&display=swap" rel="stylesheet">
+
+        <!-- Link Swiper's CSS -->
+        <link rel="stylesheet" href="css/swiper.min.css">
+      
+    <style>
+        /* 
+            Font size
+            150 %   = 24px = 1.5rem            137.5%  = 22px = 1.375rem            125%    = 20px = 1.25rem 
+            118.75% = 19px = 1.1875rem         112.5%  = 18px = 1.125rem            100%    = 16px = 1rem 
+            87.5%   = 14px = 0.875rem          81.25%  = 13px = 0.8125rem           75%     = 12px = 0.75rem 
+            62.5%   = 10px = 0.625rem          50%     =  8px = 0.5rem 
+        */
+        
+        /* General */
+        html, body { margin: 0; padding: 0; scroll-behavior: smooth;}
+        body { font-family: 'Noto Sans TC', 'Microsoft JhengHei', 'Apple LiGothic Medium', 'DFKai-SB', sans-serif;  font-size: 12px; color: #333; }
+        .hide { display: none; }
+        
+        .header { display: block; }
+        .header, .eachticket{ position: relative; max-width: 750px; margin: 0 auto; }
+        .header h1          { font-size: 1.5rem; font-weight: normal;    }
+        .header .button_bar { text-align: right; }
+        .header h1, .header .button_bar { width: 49.5%; display: inline-block; vertical-align: middle; margin:1.5rem 0; }
+        .header .button_bar a.button    { vertical-align: middle; position: relative; }
+        a.button { background:#1db5e4; color: #fff; width: max-content; padding: 8px 30px; border: none; border-radius: 34px; text-decoration: none;     transition: background-color 300ms ease-out;}
+        a.button:hover { background-color: #0E9EC9; }
+        a.button + a.button { margin-left: 1rem; }
+        
+        /* share bubble */
+        #share_bubble {
+            visibility: hidden; border: 1px solid #d7d7d7;
+            width: max-content; min-width: 274px;   background-color: #fff; color: #333; text-align: center;
+            border-radius: 6px; padding: 8px; position: absolute; z-index: 2; top: 44px; right: 0;
+        }
+        #share_bubble:after { content: ''; position: absolute;
+            top: 0; right: 15%;  width: 0;   height: 0; border: 1px solid #cdcdcd; 
+            border: 8px solid transparent; border-bottom-color: #efefef; border-top: 0;
+            margin-left: -8px;            margin-top: -8px;
+        }
+        #share_bubble.show { visibility: visible; }
+        
+        .shareicon { width: 40px; height: 40px; padding: 4px; border-radius: 5px; vertical-align: top; background: #ccc; border: none; cursor: pointer; }
+        .shareicon:focus { outline: none; }
+        .shareicon img { filter: invert(100%); pointer-events: none; }
+        .shareicon + .shareicon { margin-left: 4px;}
+        .shareicon.ico1:hover { background: #00b900; } /* Line */
+        .shareicon.ico2:hover { background: #24D366; } /* whatsapp */
+        .shareicon.ico3:hover { background: #3DB649; } /* WeChat */
+        .shareicon.ico4:hover { background: #2BA1DA; } /* Telegram */
+        .shareicon.ico5:hover { background: #0084ff; } /* FB Messager */
+        .shareicon.ico6:hover { background: #01A2E2; } /* Skype */
+        .shareicon.ico7:hover { background: #1db5e4; } /* Copy */
+        
+        
+        input#copyfield, #btn_copy { line-height: 1.5rem; margin-top: 5px; vertical-align: middle; display: inline-block; }
+        input#copyfield { width: 55%; margin:0 4% 0 0; border: 1px solid #efefef; background: #fff; text-indent: 0.5rem; padding-bottom: 2px;  } 
+        input#copyfield.selected{ animation-name: copyeffect; animation-duration: 2.5s; box-shadow: inset 0 0 0 3px white; }
+        
+        #btn_copy       { width: 34%; min-width: max-content; padding:1px 0; line-height: 1.5rem;  border: 1px solid #efefef; background: #efefef; cursor: pointer; }
+        #btn_copy:hover { background-color: #dedede; }
+        /* #btn_copy:focus { outline: none; } */
+        #btn_copy:disabled { background-color: #48c4ea; border-color: #1db5e4; color: #fff; cursor: default;
+            /* background-color: #efefef; color: #333; */ animation-name: copied; animation-duration: 3s; }
+        
+        /* Select text field animation */
+        @keyframes copyeffect { from { border-color: #1db5e4; background-color: #d1f0fa;}  
+            to { border-color: #efefef; background-color: #fff;} }
+        @keyframes copied { from { background-color: #1db5e4; color: #fff; border-color: #1db5e4;}  
+            to { background-color: #efefef; border-color: #fff; } }
+        
+        
+        .eachticket { border: 1px solid #d7d7d7; } 
+        .upper          { position: relative; box-shadow: 0 4px 3px rgba(0,0,0,0.05); } 
+        .upper-wrapper  { position: relative; display: flex; flex: 1; min-height: 0px; }
+        .lower      { position: relative; border-bottom: 4px solid #0784a9; } 
+        .smartfun-membertype1 .lower, .voucher .lower      { border-bottom-color: #4f5c6b; } 
+        
+        /* Go to Top tag */
+        .gototop { position: fixed; width: 50%; right:0; bottom: 2%; z-index: 2; overflow: hidden; }
+        .gototop a { display: block; margin-left: calc(750px / 2 + 30px); text-decoration: none; color: #333; transition: 
+            text-overflow: clip; white-space: nowrap; transition: color 300ms ease-out;}
+        .gototop a:hover { color: #1db5e4; }
+        .gototop stretch { display:inline-block; transform:scale(2.4,1); }
+        
+        /* swiper */
+        .swiper-pagination-white .swiper-pagination-bullet-active { background: #898989; }
+        
+        /* Expire */
+        .eachticket.expired .upper-wrapper, .eachticket.expired .lower { filter: contrast(25%) brightness(160%); }
+        .eachticket.expired .state_tag { position: absolute; bottom: 14%;    right: 4%;    z-index: 2;  padding: 0.5rem 2.5rem;
+            font-size: 1.375rem; font-weight: bold; line-height: 1.8rem; text-align: center; color: #0784a9; 
+            background: url('imgs/state_tag.png'); background-size:100% 100%; transform: rotate(-15deg); opacity: 0.75;}
+        .eachticket:not(.expired) .state_tag { display: none; }
+        
+        /* State indicate */
+        .state_indicate { width: max-content; margin: 0 1% 0 auto; padding: 0.38rem 0.9rem;  background: #0784a9; color: #fff; font-size: 0.875rem ; }
+        
+        /* Detail Zone */
+        .detail_zone { position: relative; width: 100%; padding:0 0 2.94rem 1%; }
+        
+            /* Font style level */
+            .detail_zone p, .detail_zone .h3 { margin: 0;}
+            .detail_zone h2 { font-size: 1.375rem; font-weight: 400; line-height: 1.57rem; }
+            .detail_zone .h3{ font-size: 1.125rem; font-weight: 400; }
+            .sublabel       { font-size: 0.8125rem; }
+            .sublabel_dim   { font-size: 0.8125rem; color: #a3a3a3; }
+        
+            /* Logo */
+            .logo       { float: right; margin: 3% 3% 0 0; }
+            .logo img   { max-width: 125px; }
+        
+            /* Admission QRcode & Profile Pic */
+            .identity     { float: right; margin: 0 3% 0 0; text-align: center; font-size: 0.625rem; } 
+            .identity img { border: 1px solid #d7d7d7; vertical-align: top; }
+            .identity .user_photo { max-height: 125px; margin-right: 0.75rem; }
+            
+
+            /* Footer T&C & code list */
+            .tnc_link { position: absolute; bottom: 0.4rem; width: 100%; font-size:0.625rem; line-height: 1.125rem; color: #898989; }
+            .tnc_link a { color: #898989; }
+        
+        /* Block */
+        .block { width: 46%; display: inline-block; vertical-align: top; }
+        
+        /* Voucher style */
+        .eachticket.voucher .upper { background:#e5e7e9 url('imgs/pattern.png'); background-size: 34px;  }
+        
+        .eachticket.voucher .voucher_code div { width: min-content; text-align: center; background: #fff; }
+        
+        .eachticket.voucher .identity { display: none; }
+        .eachticket:not(.voucher) .voucher_code, .eachticket:not(.voucher) .non_refundable { display: none; }
+        
+        .signature { border-bottom: 1px solid #707070; }
+        /* .eachticket.voucher .tnc_link { display: none; } */
+        
+        
+        
+        /* Addon Table */
+        table.addon { width: 96%; margin: 3% 2% 1%; padding: 0; border-spacing: 0px;}
+        table.addon th { background: #ebebeb; padding:0 5px; line-height: 2rem;}
+        table.addon th:first-child { text-align: left;}
+        table.addon th:first-child ~ *, table.addon td:first-child ~ * { text-align: center;}
+        
+        table.addon td { padding:0 5px; line-height: 1.9rem; }
+        table.addon tr > td:last-child { text-align: left; text-indent: 1.5rem;}
+        table.addon tr.sub td { line-height: 1.2rem;  color: #a3a3a3; }
+        table.addon tr.sub td:first-child { text-indent: 0.8rem; }
+        table.addon tr.sub + tr:not(.sub) td { padding-top: 5px; }
+        
+        /* if four items */
+        table.addon > *:first-child:nth-last-child(4),
+        table.addon > *:first-child:nth-last-child(4) ~ * { }
+
+        
+        
+        /* TNC section */
+        .tnc_container  { max-width: 750px;  margin: 2% auto ; bottom: 0; font-size: 0.625rem;}
+        .tnc_block ul   { padding: 0 0 0 1rem; }
+        .tnc_block li   { line-height: 1rem; }
+        .tnc_container a { color: #333; }
+        
+        /* footer */
+        .footer {  max-width: 750px;  margin: 2% auto ; border-top: 1px solid #d7d7d7; }
+        .footer .footer_logo { max-width: 145px;     margin: 4% 0 4% auto;    float: right; }
+        
+        /* Responsive */
+        /* Desktop & Tablet  Above */
+        @media only screen and (min-width: 40.0625em) { /* 40.0625em (641px) */
+            /* General */
+            .only-for-mobile { display: none; }
+            
+            .keyvisual.not-for-mobile img { max-width: 100%; }
+            .keyvisual.not-for-mobile .img_holder { height: 0; } /* hack the image height */            
+            .keyvisual.not-for-mobile { min-width: 272px; min-height: 452px; overflow-y: hidden; }
+            .keyvisual { width: min-content; line-height: 0; /* background: #E5E6E7; */ }             
+            
+            /* Hide sub date */
+            table.addon tr.sub td:nth-child(2) { text-indent: -9999px; }
+            
+            /* Admission QRcode & Profile Pic */
+            .identity .user_photo ~ p { margin: 0 0 0 47%; }
+            .identity p { margin: 0 ; }
+            
+            /* Each ticket */
+            .eachticket + .eachticket { margin-top: 5%; }
+            
+            /* Voucher style */            
+            .eachticket.voucher .keyvisual  { order: 2; }
+            .eachticket.voucher .detail_zone{ order: 1; margin: 0 -8% 0 0; 
+                display: grid; grid-template-columns: 100px auto auto auto auto 60px;}
+
+            .eachticket.voucher .voucher_code   { grid-row: 1 / 12; order: 1;   text-align: center;}        
+            .eachticket.voucher h2              { grid-column: 2 / span 3 ;}        
+            .eachticket.voucher .logo           { grid-row: 1; grid-column: 5 / span 2;}
+            .eachticket.voucher .detail_zone > .sublabel_dim, .eachticket.voucher .detail_zone > .h3,
+            .eachticket.voucher .detail_zone > .sublabel{ grid-column: 2 / -1 ;}
+            .eachticket.voucher .detail_zone > .block   { grid-column: 2 / span 2 ; width: auto;}
+            .eachticket.voucher .detail_zone > .block + .block { grid-column: 4 / span 2 ;}
+            .eachticket.voucher .detail_zone > .tnc_link { grid-column: 2 / span 4 ;}
+
+            .eachticket.voucher .voucher_code div { margin: 160% -87% 0; padding: 6% 10%;  transform-origin: 50% 50%; transform: rotate(90deg); }
+            .eachticket.voucher .logo       { margin: 0; display: flex; align-items: center;}     
+            .eachticket.voucher .logo img   { max-width: 148px; }
+            .eachticket.voucher .keyvisual.not-for-mobile img { /* max-height: 390px;*/ }
+            .eachticket.voucher.expired .state_tag { right: 25%; }
+            
+            /* swiper */
+            .swiper-wrapper { display: block; }
+            
+            /* Hide addone */
+            .lower.no_addon table.addon{ display: none;}
+            
+            /* TNC section */
+            .tnc_block { display: inline-block; width: 48%; vertical-align: top; }
+            .tnc_block + .tnc_block { margin-left: 3%; }
+        }
+        
+        /* Mobile version or below */
+        @media only screen and (max-width: 40em) { /* 40em (640px)*/
+            /* General */
+            .not-for-mobile { display: none !important; }
+            .block { display: block; width: 100%; }
+            
+            .header { max-width: calc(100% - 30px); }
+            .header h1, .header .button_bar { margin:1rem 0; width: 100%; text-align: center; }
+            
+            /* */
+            .header .button_bar a.button { position: initial; }
+            #share_bubble { top: 54px; right: auto; left: 0; }
+            #share_bubble:after { right: auto; left: 30%; }            
+            .shareicon + .shareicon { margin-left: 1px; }
+            
+            
+            /* State indicate */
+            .state_indicate { margin: 0 0 0 auto; padding: 0.38rem 0.6rem;}
+            
+            /* Font style level */
+            .detail_zone    { letter-spacing: -0.5px;}
+            .detail_zone h2 { line-height: 1.25rem; font-size: 1.25rem; margin-bottom: 0.75rem; }
+            .detail_zone .h3{ line-height: 1.25rem; }
+            .sublabel_dim   { line-height: 1rem;    font-size: 0.78rem; }
+            
+            .validperiod { display: block; text-align: center; width: max-content; }
+            
+            .keyvisual.only-for-mobile img { max-width: 100%; /*calc(100vw - 30px)*/ width: -webkit-fill-available; }  
+            .keyvisual { line-height: 0;  /* background: #efefef; */ } 
+            
+            .logo { float: none; position: absolute;  margin-top: -56px; }
+            .logo img { max-width: 140px; margin-left: 2.5%; }
+            .detail_zone { width: calc(100% - 15px); margin: 0 5px 0 auto; padding: 0 0 3rem 0;   z-index: 2; height: 390px; }
+            
+            
+            .identity { display: grid; margin: 0; max-width: 38%; text-align: center; }
+            .identity .user_photo  { order: 0; margin: 0.75rem auto 0;}
+            .identity .qrcode      { order:-1; margin: 0 auto; max-width: 100%;}
+            
+            .eachticket { max-width: calc(100% - 30px); border: none; }
+            .upper {box-shadow: none;}
+            .upper, .lower { width: 100%;   border: 1px solid #d7d7d7;  margin-bottom: 0; border-bottom: 0; }
+            .lower { border-top: 0px; border-bottom: 4px solid #0784a9;  }
+            .upper-wrapper      { flex-direction: column; min-height: 480px; /* border-bottom: 4px solid #0784a9; */ }
+            
+            /* Voucher style */
+            .eachticket.voucher .detail_zone{ /* display: grid; grid-template-columns: auto 80px; */ }
+            .eachticket.voucher h2          { grid-column: 1 / span 2 ; } 
+            .eachticket.voucher .voucher_code { /* grid-column: 2 ; grid-row: 2 / 12; position: absolute;    transform: rotate(90deg) translate(-30%, 0%);    transform-origin: 0 100%;*/
+                display: grid;    max-width: 28.6%;    float: right; }
+            .eachticket.voucher .voucher_code div { padding: 2% 3%; transform: rotate(90deg) translate(0%, -100%);    transform-origin: 0% 0%; }
+            .eachticket.voucher .detail_zone > .sublabel_dim, .eachticket.voucher .detail_zone > .h3,
+            .eachticket.voucher .detail_zone > .sublabel, .eachticket.voucher .detail_zone > .block{ grid-column: 1 / span 1 ; width:auto; }
+            
+            /* tnc link */
+            .tnc_link { position: absolute;    grid-column: 1 / span 2; bottom: 0.4 rem; }
+            
+            
+            /* Addon Table */
+            table.addon { width: 96%; margin: 0 2% 0; }
+            table.addon th:not(:first-child) { display: none; }
+            table.addon th:first-child { background: none; border-bottom: 2px solid #dddddd; color: #0784a9; }
+            
+            table.addon tbody::-webkit-scrollbar-track  { background-color: #F5F5F5; border-radius: 8px; /* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);	*/}
+            table.addon tbody::-webkit-scrollbar        { background-color: #F5F5F5; border-radius: 8px; width: 8px;	 }
+            table.addon tbody::-webkit-scrollbar-thumb  { background-color: #dddddd; border-radius: 8px; /* -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); */} 
+            
+            table.addon tbody { width: 100%; height: calc(400px - 55px ); margin: 10px 0 0;    display: block;  overflow-y: auto;  zoom:100%; z-index: 99; pointer-events: all;  /* -webkit-overflow-scrolling: touch; */ }
+            table.addon tbody tr { pointer-events: none;
+                display: grid;  grid-template-columns: 25% 25% 25% 25%;
+                grid-template-areas: 'header header header amount'
+                                     'sub1 sub1 sub2 sub2';
+            }
+            table.addon td { line-height: 1.2rem; pointer-events: none; }            
+            table.addon tr.sub td:first-child   { text-indent: 0;}
+            
+            table.addon tr.subhead td.date, table.addon tr.subhead td.time { display: none; }
+            table.addon tr:not(.sub):not(.subhead)   { border-bottom: 1px solid #efefef; margin-bottom: 5%; }
+            table.addon tr.sub + tr:not(.sub)  { border-top: 1px solid #efefef; padding-top: 4%; }
+            
+            table.addon tr > td:first-child     { grid-area: header; }
+            table.addon tr > td:last-child      { grid-area: amount; text-indent: 0.5rem; padding: 0; }
+            table.addon tr > td:nth-child(2)    { grid-area: sub1; text-align: left; }
+            table.addon tr > td:nth-child(3)    { grid-area: sub2; text-align: left; }
+                        
+            /* if four items */
+            table.addon > *:first-child:nth-last-child(4).tbody,
+            table.addon > *:first-child:nth-last-child(4) ~ *.tbody { height: calc(268px - 110px ); margin: 2px 0 10px; }
+            
+            
+            
+            /* Hide addone */
+            .lower.no_addon { }
+            
+            /* swiper */
+            .swiper-container { /* border: 1px solid green; */ padding-top: 16px; } 
+            .swiper-container-horizontal>.swiper-pagination-bullets { bottom: auto; top: -4px;}
+            .lower { /* position: absolute;  margin-bottom: 5%; */  height: 400px;    /* overflow-y: auto;*/ }
+            
+            /* TNC section */
+            .tnc_container { max-width: calc(100% - 30px); }
+            
+            /* footer */
+            .footer { max-width: calc(100% - 30px); text-align: center; }
+            .footer .footer_logo { margin: 6% auto 2%;    float: none; }
+        }
+        
+        /* Print */
+        page[size="A4"] {
+          background: white;  width: 21cm;  height: 29.7cm;  display: block;  margin: 0; padding: 0;  
+        } 
+
+        @media only print  { 
+            html,body { margin: 0; padding: 0; background: none; }
+            .header .button_bar, .only-for-mobile, .gototop { display: none; }
+            .header h1 { margin-top: 0; }
+            .swiper-container { overflow: initial;    width: 750px; }
+            .swiper-wrapper { display: initial;}
+            .swiper-container-horizontal>.swiper-pagination-bullets { display: none; }
+            
+            .keyvisual { line-height: 0; overflow-y: hidden; }
+            .keyvisual.not-for-mobile { width: 434px;    min-height: 452px;}
+            .keyvisual img { max-width: 100%;}                        
+            .keyvisual .img_holder { height: 0;} /* hack the image height */            
+            
+            
+            .lower.no_addon table.addon { display: none; }
+            div.eachticket {-webkit-column-break-inside: avoid; page-break-inside: avoid; break-inside: avoid;}
+            div.eachticket + div.eachticket { margin-top: 6%; }
+            .detail_zone .h3 { line-height: 1.6rem; }
+            
+            /* Voucher style */
+            .eachticket.voucher .upper { -webkit-print-color-adjust: exact; /* Force Android Chrome display Bg image to print */}
+            .eachticket.voucher .keyvisual  { order: 2; }
+            .eachticket.voucher .detail_zone{ order: 1; margin: 0 -8% 0 0; 
+                display: grid; grid-template-columns: 100px auto auto auto auto 60px;}
+
+            .eachticket.voucher .voucher_code   { grid-row: 1 / 12; order: 1;   text-align: center;}        
+            .eachticket.voucher h2              { grid-column: 2 / span 3 ;}        
+            .eachticket.voucher .logo           { grid-row: 1; grid-column: 5 / span 2;}
+            .eachticket.voucher .detail_zone > .sublabel_dim, .eachticket.voucher .detail_zone > .h3,
+            .eachticket.voucher .detail_zone > .sublabel{ grid-column: 2 / -1 ;}
+            .eachticket.voucher .detail_zone > .block   { grid-column: 2 / span 2 ; width: auto;}
+            .eachticket.voucher .detail_zone > .block + .block { grid-column: 4 / span 2 ;}
+            .eachticket.voucher .detail_zone > .tnc_link { grid-column: 2 / span 4 ;}
+
+            .eachticket.voucher .voucher_code div { margin: 160% -87% 0; padding: 6% 10%;  transform-origin: 50% 50%; transform: rotate(90deg); }
+            .eachticket.voucher .logo       { margin: 0; display: flex; align-items: center;}     
+            .eachticket.voucher .logo img   { max-width: 148px; }
+            .eachticket.voucher .keyvisual.not-for-mobile img { /* max-height: 390px;*/ }
+            .eachticket.voucher.expired .state_tag { right: 25%; }
+            
+            /* Fix Mobile Print (layout distorted by JS Swiper) */
+            .swiper-wrapper { transform: none !important; }
+            .eachticket     { width: inherit !important; margin-right: auto !important; }
+        }
+        
+    </style>
+        
+    <script>
+        
+        function toggle_share_bubble(el){
+            // console.log("call toggle_share_bubble");
+            var share_bubble = document.getElementById("share_bubble");
+            var show = share_bubble.classList.contains('show');
+            
+            if (el) {
+                if ( !show ) {
+                    share_bubble.classList.add('show');                    
+                }
+            }else{                
+                console.log("clear");
+                share_bubble.classList.remove('show');
+                document.getElementById('copyfield').classList.remove('selected');
+            }
+        }
+        
+        document.addEventListener('click', function (event) {
+            var clickedElem = event.target;
+            // console.log(clickedElem.id);
+            // console.log(clickedElem.classList);
+            // clickedElem.classList.add("clicked")
+            
+            // If the event target match
+            if ( clickedElem.id == "btn_share" || clickedElem.id == "share_bubble" || clickedElem.id == "btn_copy" || clickedElem.id == "copyfield" || clickedElem.classList.contains("shareicon") ) {
+                // console.log("open");
+                toggle_share_bubble( clickedElem );
+            }else {
+                // console.log("close");
+                toggle_share_bubble();
+            }            
+        }, false);
+        
+        var myTimeout1;
+        var myTimeout2;
+        
+        function native_share() {
+            if (navigator.share) {
+                navigator.share({
+                title: 'Share your E-Ticket',
+                text: 'Please send to your friend only.',
+                url: 'http://localhost:8888/_E-Ticket/',
+                })
+                .then(() => console.log('Successful share'))
+                .catch((error) => console.log('Error sharing', error));
+            } else {
+                console.log('Share not supported on this browser, do it the old way.');
+                copytoClipboard();
+            }
+        }
+        
+        function copytoClipboard() {
+            var copyText = document.getElementById('copyfield');
+
+            /* Create range for IOS copy */
+            var range = document.createRange();
+            range.selectNode(copyText);  
+            window.getSelection().addRange(range);  
+            
+            try {  
+                // Now that we've selected the anchor text, execute the copy command  
+                var successful = document.execCommand('copy', false, null);
+                var msg = successful ? 'successful' : 'unsuccessful'; 
+                console.log('successful='+successful);
+                // alert('successful='+successful);
+
+                if(successful){
+                    //$this.addClass("copied").html("Copied");
+                    console.log('CreateRange Copy used');
+                }else{
+                    console.log('Select() text Copy used');
+                    copyText.classList.add('selected');
+                    copyText.focus();
+                    copyText.select();
+                    document.execCommand("copy");
+                }
+
+            } catch(err) {  
+                console.log('Oops, unable to IOS copy');  
+            }  
+            
+            
+            
+            clearTimeout(myTimeout1);
+            myTimeout1 = setTimeout(function(){ 
+                document.getElementById('copyfield').classList.remove('selected');
+                /* if (document.selection){
+                    document.selection.empty();
+                }*/
+            }, 2000);
+            
+            
+            var btn_copy = document.getElementById('btn_copy');
+            btn_copy.innerHTML= "Copied 已複製";
+            btn_copy.disabled = true; // temp lock the button
+            
+            clearTimeout(myTimeout2);
+            myTimeout2 = setTimeout(function(){ 
+                document.getElementById('btn_copy').innerHTML= "Copy 複製"; 
+                document.getElementById('btn_copy').disabled = false;
+            }, 1200);
+          // alert("Copied: "+copyText.value);
+          console.log( "Copied: "+copyText.value ); 
+            
+            // removeRange(range) when it is supported  
+            window.getSelection().removeAllRanges();          
+        }
+        
+        
+    </script>
+    
+  </head>
+<body>
+    <div class="gototop not-for-mobile"><a href="#header"><stretch>^&nbsp;</stretch> Back To Top<br> &nbsp; &nbsp; 回到頁頂</a></div>
+    <div class="header" id="header">
+        <h1 class="not-for-mobile">Tickets Preview 門票預覽</h1>
+        <span class="button_bar">
+            <a class="button" href="#" id="btn_share">Share 分享
+                <span id="share_bubble" class="">
+                    <button class="shareicon ico1" onclick="window.location.href = 'http://line.me/R/msg/text/?Tickets Preview 門票預覽   http://localhost:8888/_E-Ticket/' ;">
+                        <img src="imgs/iconfinder_group1.svg" />
+                    </button>
+                    <button class="shareicon ico2" onclick="window.location.href = 'whatsapp://send?text=Tickets Preview 門票預覽  http://localhost:8888/_E-Ticket/' ;">
+                        <img src="imgs/iconfinder_group2.svg" />
+                    </button>
+                    <button class="shareicon ico3" onclick="">
+                        <img src="imgs/iconfinder_group3.svg" />
+                    </button>
+                    <button class="shareicon ico4" onclick="window.location.href = 'https://telegram.me/share/url?url=&text=Tickets Preview 門票預覽  http://localhost:8888/_E-Ticket/' ;">
+                        <img src="imgs/iconfinder_group4.svg" />
+                    </button>
+                    <button class="shareicon ico5" onclick="window.location.href = 'fb-messenger://share/?link=www.yahoo.com&app_id=123456789' ;">
+                        <img src="imgs/iconfinder_group5.svg" />
+                    </button>
+                    <!-- button class="shareicon ico6" onclick="window.location.href = 'https://web.skype.com/share?url=Tickets Preview 門票預覽  http://localhost:8888/_E-Ticket/' ;">
+                        <img src="imgs/iconfinder_group6.svg" />
+                    </button -->
+                    <button class="shareicon ico7" onclick="native_share()">
+                        <img src="imgs/iconfinder_group7.svg" />
+                    </button>
+                    <br>
+                    <input type="text" value="https://localhost/123" id="copyfield" contenteditable="true"><button id="btn_copy" onclick="copytoClipboard()">Copy 複製</button>
+                </span>
+            </a>
+            <a class="button" href="javascript:window.print();">Print 列印</a>
+        </span>
+    </div>
+    <!-- Swiper -->
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            
+            <!-- Slides -->
+            <div class="swiper-slide eachticket ">
+                <div class="upper">
+                    <div class="state_tag">Expired<br>已過期</div>
+                    <div class="upper-wrapper">
+                        <div class="keyvisual not-for-mobile">
+                            <div class="img_holder"><img src="imgs/keyv_1_1_long.png"></div>
+                        </div>
+                        <div class="keyvisual only-for-mobile"><img src="imgs/keyv_1_1_m.png"></div>
+                        <div class="detail_zone">
+                            <div class="logo"><img src="imgs/logo.png"></div>                
+                            <h2>Daytime Ticket - Adult<br>日間門票 - 成人</h2>
+
+                            <div class="identity"><!-- img class="user_photo" src="user_photo01.jpg" --><img class="qrcode" src="imgs/qrcode.jpg"><p>Non-refundable <br class="only-for-mobile"> 不作退款</p></div>
+                            <div class="voucher_code"><div><img src="imgs/barcode.svg">LBEPR0XWQ0005P &nbsp; PIN: KS4K</div></div>
+
+                            <p class="sublabel_dim">Valid for 1 Day During The Period<br>適用於以下限期內的其中1天</p>
+                            <p class="h3"><span class="validperiod">30 Jun 2019<br class="only-for-mobile"> – <br class="only-for-mobile">30 Jul 2020</span></p>
+
+                            <br>
+
+                            <p class="sublabel_dim">Ticket Price 門票票價</p>
+                            <p class="h3">HK$ 480.0</p>
+
+                            <br>
+
+                            <div class="tnc_link">
+                                <br>
+                                <div class="state_indicate hide">This ticket has used 1 day<br>此票證已使用1天</div>
+                                <a href="#tnc_eng">Terms and conditions</a> &nbsp; <a href="#tnc_chi">門票條款及細則</a>
+                                <span class="non_refundable">&nbsp; &nbsp; &nbsp;  <br class="only-for-mobile"> Non-refundable 不作退款</span>
+                                <br> 1234567890123456789 &nbsp; &nbsp; &nbsp; 123456789012345678901234
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lower ">
+                    <table class="addon" >
+                        <thead>
+                            <tr>
+                                <th>加購項目 Add-On Items</th>
+                                <th>日期 Date</th>
+                                <th>時間 Time</th>
+                                <th>數量 Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody class="tbody">
+                            <tr>
+                                <td>小食亭HK$100餐飲券 Food Kiosks HK$100 Food Pass</td>
+                                <td>---</td>
+                                <td>---</td>
+                                <td>x 6 (-3)</td>
+                            </tr>
+                            <tr>
+                                <td>餐廳HK$500餐飲券 Restaurant HK$500 Food Pass </td>
+                                <td>---</td>
+                                <td>---</td>
+                                <td>x 6 (-3)</td>
+                            </tr>
+                            <tr class="subhead">
+                                <td>海洋快證(全項) Ocean FasTrack (All)</td>
+                                <td class="date">30 / 06 / 19</td>
+                                <td class="time">---</td>
+                                <td>x 6 (-3)</td>
+                            </tr>
+                            <tr class="sub">
+                                <td>VR越礦飛車時段 VR Mine Train</td>
+                                <td class="date">30 / 06 / 19</td>
+                                <td class="time">1:00 pm - 1:30 pm</td>
+                                <td></td>
+                            </tr>
+                            <tr class="sub">
+                                <td>極地時速時段 Arctic Blast </td>
+                                <td class="date">30 / 06 / 19</td>
+                                <td class="time">1:00 pm - 1:30 pm</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>豚聚一刻 Dolphin Encounter</td>
+                                <td>30 / 06 / 19</td>
+                                <td>1:00 pm - 1:30 pm</td>
+                                <td>x 2</td>
+                            </tr>
+                            <tr>
+                                <td>海洋快證 (7) Ocean FasTrack (7)</td>
+                                <td>30 / 06 / 19</td>
+                                <td>---</td>
+                                <td>x 6 (-3)</td>
+                            </tr>
+                            <tr>
+                                <td>樂園正門泊車 Dry Park Parking </td>
+                                <td>30 / 06 / 19</td>
+                                <td>---</td>
+                                <td>x 6 (-3)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="swiper-slide eachticket ">
+                <div class="upper">
+                    <div class="state_tag">Expired<br>已過期</div>
+                    <div class="upper-wrapper">
+                        <div class="keyvisual not-for-mobile">
+                            <div class="img_holder"><img src="imgs/keyv_combo_1.png"></div>
+                        </div>
+                        <div class="keyvisual only-for-mobile"><img src="imgs/keyv_combo_1_m.png"></div>
+                        <div class="detail_zone">
+                            <div class="logo"><img src="imgs/logo.png"></div>                
+                            <h2>Combo Ticket - Family<br>1日間套票 - 家庭</h2>
+
+                            <div class="identity"><!-- img class="user_photo" src="user_photo01.jpg" --><img class="qrcode" src="imgs/qrcode.jpg"><p>Non-refundable <br class="only-for-mobile"> 不作退款</p></div>
+                            <div class="voucher_code"><div><img src="imgs/barcode.svg">LBEPR0XWQ0005P &nbsp; PIN: KS4K</div></div>
+
+                            <p class="sublabel_dim">Valid for 1 Day During The Period<br>適用於以下限期內的其中1天</p>
+                            <p class="h3"><span class="validperiod">30 Jun 2019<br class="only-for-mobile"> – <br class="only-for-mobile">30 Jul 2020</span></p>
+
+                            <br>
+
+                            <p class="sublabel_dim">Ticket Price 門票票價</p>
+                            <p class="h3">HK$ 888.0</p>
+
+                            <br>
+
+                            <div class="tnc_link">
+                                <br>
+                                <div class="state_indicate hide">This ticket has used 1 day<br>此票證已使用1天</div>
+                                <a href="#tnc_eng">Terms and conditions</a> &nbsp; <a href="#tnc_chi">門票條款及細則</a>
+                                <span class="non_refundable">&nbsp; &nbsp; &nbsp;  <br class="only-for-mobile"> Non-refundable 不作退款</span>
+                                <br> 1234567890123456789 &nbsp; &nbsp; &nbsp; 123456789012345678901234
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lower ">
+                    <table class="addon" >
+                        <thead>
+                            <tr>
+                                <th>套餐項目 Combo Items</th>
+                                <th>日期 Date</th>
+                                <th>時間 Time</th>
+                                <th>數量 Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody class="tbody">
+                            <tr>
+                                <td>日間門票 成人門票 Drypark Ticket Adult</td>
+                                <td>---</td>
+                                <td>---</td>
+                                <td>x 2</td>
+                            </tr>
+                            <tr>
+                                <td>日間門票 小童門票 Drypark Ticket Adult</td>
+                                <td>---</td>
+                                <td>---</td>
+                                <td>x 2</td>
+                            </tr>
+                            <tr>
+                                <td>小食亭HK$100餐飲券 Food Kiosks HK$100 Food Pass</td>
+                                <td>---</td>
+                                <td>---</td>
+                                <td>x 1 (-1)</td>
+                            </tr>
+                        </tbody>
+                        <thead>
+                            <tr>
+                                <th>加購項目 Add-On Items</th>
+                                <th>日期 Date</th>
+                                <th>時間 Time</th>
+                                <th>數量 Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody class="tbody">
+                            <tr>
+                                <td>餐廳HK$500餐飲券 Restaurant HK$500 Food Pass </td>
+                                <td>---</td>
+                                <td>---</td>
+                                <td>x 6 (-3)</td>
+                            </tr>
+                            <tr class="subhead">
+                                <td>海洋快證(全項) Ocean FasTrack (All)</td>
+                                <td class="date">30 / 06 / 19</td>
+                                <td class="time">---</td>
+                                <td>x 6 (-3)</td>
+                            </tr>
+                            <tr class="sub">
+                                <td>VR越礦飛車時段 VR Mine Train</td>
+                                <td class="date">30 / 06 / 19</td>
+                                <td class="time">1:00 pm - 1:30 pm</td>
+                                <td></td>
+                            </tr>
+                            <tr class="sub">
+                                <td>極地時速時段 Arctic Blast </td>
+                                <td class="date">30 / 06 / 19</td>
+                                <td class="time">1:00 pm - 1:30 pm</td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>豚聚一刻 Dolphin Encounter</td>
+                                <td>30 / 06 / 19</td>
+                                <td>1:00 pm - 1:30 pm</td>
+                                <td>x 2</td>
+                            </tr>
+                            <tr>
+                                <td>海洋快證 (7) Ocean FasTrack (7)</td>
+                                <td>30 / 06 / 19</td>
+                                <td>---</td>
+                                <td>x 6 (-3)</td>
+                            </tr>
+                            <tr>
+                                <td>樂園正門泊車 Dry Park Parking </td>
+                                <td>30 / 06 / 19</td>
+                                <td>---</td>
+                                <td>x 6 (-3)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="swiper-slide eachticket expired">
+                <div class="upper">
+                    <div class="state_tag">Expired<br>已過期</div>
+                    <div class="upper-wrapper">
+                        <div class="keyvisual not-for-mobile">
+                            <div class="img_holder"><img src="imgs/keyv_1_2.png"></div>
+                        </div>
+                        <div class="keyvisual only-for-mobile"><img src="imgs/keyv_1_2_m.png"></div>
+                        <div class="detail_zone">
+                            <div class="logo"><img src="imgs/logo.png"></div>                
+                            <h2>Daytime Ticket - Adult <br>日間門票 - 成人</h2>
+
+                            <div class="identity"><img class="qrcode" src="imgs/qrcode.jpg"><p>Non-refundable <br class="only-for-mobile"> 不作退款</p></div>
+                            <div class="voucher_code"><div><img src="imgs/barcode.svg">LBEPR0XWQ0005P &nbsp; PIN: KS4K</div></div>
+
+                            <p class="sublabel_dim">Valid for 1 Day During The Period<br>適用於以下限期內的其中1天</p>
+                            <p class="h3"><span class="validperiod">30 Jun 2019<br class="only-for-mobile"> – <br class="only-for-mobile">30 Jul 2020</span></p>
+
+                            <br>
+
+                            <p class="sublabel_dim">Ticket Price 門票票價</p>
+                            <p class="h3">HK$ 480.0</p>
+
+                            <div class="tnc_link">
+                                <br>
+                                <div class="state_indicate hide">This ticket has used 1 day<br>此票證已使用1天</div>
+                                <a href="#tnc_eng">Terms and conditions</a> &nbsp; <a href="#tnc_chi">門票條款及細則</a>
+                                <span class="non_refundable">&nbsp; &nbsp; &nbsp;  <br class="only-for-mobile"> Non-refundable 不作退款</span>
+                                <br> 1234567890123456789 &nbsp; &nbsp; &nbsp; 123456789012345678901234
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lower no_addon">
+                    <table class="addon" >
+                        <thead>
+                            <tr>
+                                <th>加購項目 Add-On Items</th>
+                                <th>日期 Date</th>
+                                <th>時間 Time</th>
+                                <th>數量 Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody class="tbody">
+                            <tr>
+                                <td>沒有加購項目 No Add-On Items</td>
+                                <td></td>
+                                <td></td>
+                                <td>----</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="swiper-slide eachticket">
+                <div class="upper">
+                    <div class="state_tag">Expired<br>已過期</div>
+                    <div class="upper-wrapper">
+                        <div class="keyvisual not-for-mobile">
+                            <div class="img_holder"><img src="imgs/keyv_1_3.png"></div>
+                        </div>
+                        <div class="keyvisual only-for-mobile"><img src="imgs/keyv_1_3_m.png"></div>
+                        <div class="detail_zone">
+                            <div class="logo"><img src="imgs/logo.png"></div>                
+                            <h2>Daytime Ticket - Adult <br>日間門票 - 成人</h2>
+
+                            <div class="identity"><img class="qrcode" src="imgs/qrcode.jpg"><p>Non-refundable <br class="only-for-mobile"> 不作退款</p></div>
+                            <div class="voucher_code"><div><img src="imgs/barcode.svg">LBEPR0XWQ0005P &nbsp; PIN: KS4K</div></div>
+
+                            <p class="sublabel_dim">Valid for 2 Day During The Period<br>適用於以下限期內的其中2天</p>
+                            <p class="h3"><span class="validperiod">30 Jun 2019<br class="only-for-mobile"> – <br class="only-for-mobile">30 Jul 2020</span></p>
+
+                            <br>
+
+                            <p class="sublabel_dim">Ticket Price 門票票價</p>
+                            <p class="h3">HK$ 480.0</p>
+
+                            <div class="tnc_link">
+                                <br>
+                                <div class="state_indicate">This ticket has used 1 day<br>此票證已使用1天</div>
+                                <a href="#tnc_eng">Terms and conditions</a> &nbsp; <a href="#tnc_chi">門票條款及細則</a>
+                                <span class="non_refundable">&nbsp; &nbsp; &nbsp;  <br class="only-for-mobile"> Non-refundable 不作退款</span>
+                                <br> 1234567890123456789 &nbsp; &nbsp; &nbsp; 123456789012345678901234
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lower no_addon">
+                    <table class="addon" >
+                        <thead>
+                            <tr>
+                                <th>加購項目 Add-On Items</th>
+                                <th>日期 Date</th>
+                                <th>時間 Time</th>
+                                <th>數量 Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody class="tbody">
+                            <tr>
+                                <td>沒有加購項目 No Add-On Items</td>
+                                <td></td>
+                                <td></td>
+                                <td>----</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="swiper-slide eachticket ">
+                <div class="upper">
+                    <div class="state_tag">Expired<br>已過期</div>
+                    <div class="upper-wrapper">
+                        <div class="keyvisual not-for-mobile">
+                            <div class="img_holder"><img src="imgs/keyv_edu_1.png"></div>
+                        </div>
+                        <div class="keyvisual only-for-mobile"><img src="imgs/keyv_edu_1_m.png"></div>
+                        <div class="detail_zone">
+                            <div class="logo"><img src="imgs/logo.png"></div>                
+                            <h2>Nature Exploration with Oxford Path (2-3 years old)<br>Oxford Path 自然探索班(2-3 歲)</h2>
+
+                            <div class="identity"><img class="qrcode" src="imgs/qrcode.jpg"><p>Non-refundable <br class="only-for-mobile"> 不作退款</p></div>
+                            <div class="voucher_code"><div><img src="imgs/barcode.svg">LBEPR0XWQ0005P &nbsp; PIN: KS4K</div></div>
+
+                            <p class="sublabel_dim">Date & Time 日期及時段</p>
+                            <p class="sublabel">NB031E</p>
+                            <p class="h3">8, 15, 22, 29 Jun 2019<br class="only-for-mobile"> 14:30 – 15:45</p>
+
+                            <p class="sublabel">NB041E</p>
+                            <p class="h3">8, 15, 22, 29 Jul 2019<br class="only-for-mobile"> 14:30 – 15:45</p>
+
+                            <p class="sublabel">NB051E</p>
+                            <p class="h3">8, 15, 22, 29 Aug 2019<br class="only-for-mobile"> 14:30 – 15:45</p>
+
+                            <br>
+
+                                <p class="sublabel_dim">Participant Name 參加者姓名</p>
+                                <p class="h3">Chan Tai Man</p>
+                            
+                                <br>
+                            
+                                <p class="sublabel_dim">Ticket Price 門票票價</p>
+                                <p class="h3">HK$ 1,980.0</p>
+
+
+                            <div class="tnc_link">
+                                <br>
+                                <div class="state_indicate hide">This ticket has used 1 day<br>此票證已使用1天</div>
+                                <a href="#tnc_eng">Terms and conditions</a> &nbsp; <a href="#tnc_chi">門票條款及細則</a>
+                                <span class="non_refundable">&nbsp; &nbsp; &nbsp;  <br class="only-for-mobile"> Non-refundable 不作退款</span>
+                                <br> 1234567890123456789 &nbsp; &nbsp; &nbsp; 123456789012345678901234
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lower no_addon">
+                    <table class="addon" >
+                        <thead>
+                            <tr>
+                                <th>加購項目 Add-On Items</th>
+                                <th>日期 Date</th>
+                                <th>時間 Time</th>
+                                <th>數量 Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody class="tbody">
+                            <tr>
+                                <td>沒有加購項目 No Add-On Items</td>
+                                <td></td>
+                                <td></td>
+                                <td>----</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="swiper-slide eachticket ">
+                <div class="upper">
+                    <div class="state_tag">Expired<br>已過期</div>
+                    <div class="upper-wrapper">
+                        <div class="keyvisual not-for-mobile">
+                            <div class="img_holder"><img src="imgs/keyv_oft_1.png"></div>
+                        </div>
+                        <div class="keyvisual only-for-mobile"><img src="imgs/keyv_oft_1_m.png"></div>
+                        <div class="detail_zone">
+                            <div class="logo"><img src="imgs/logo.png"></div>                
+                            <h2>Ocean FasTrack - All<br>海洋快證 - 全項</h2>
+
+                            <div class="identity"><img class="qrcode" src="imgs/qrcode.jpg"><p>Non-refundable <br class="only-for-mobile"> 不作退款</p></div>
+                            <div class="voucher_code"><div><img src="imgs/barcode.svg">LBEPR0XWQ0005P &nbsp; PIN: KS4K</div></div>
+
+                            <p class="sublabel_dim">Date & Time 日期及時段</p>
+                            <p class="h3">30 Jun 2019</p>
+
+                            <br>
+
+                            <p class="sublabel">VR Mine Train VR越礦飛車</p>
+                            <p class="h3">10:30 – 10:45</p>
+
+                            <br>
+
+                            <p class="sublabel">Arctic Blast 極地時速時段</p>
+                            <p class="h3">14:30 – 14:45</p>
+
+                            <br>                   
+
+                            <p class="sublabel_dim">Ticket Price 門票票價</p>
+                            <p class="h3">HK$ 380.0</p>
+
+                            <div class="tnc_link">
+                                <br>
+                                <div class="state_indicate hide">This ticket has used 1 day<br>此票證已使用1天</div>
+                                <a href="#tnc_eng">Terms and conditions</a> &nbsp; <a href="#tnc_chi">門票條款及細則</a>
+                                <span class="non_refundable">&nbsp; &nbsp; &nbsp;  <br class="only-for-mobile"> Non-refundable 不作退款</span>
+                                <br> 1234567890123456789 &nbsp; &nbsp; &nbsp; 123456789012345678901234
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lower no_addon">
+                    <table class="addon" >
+                        <thead>
+                            <tr>
+                                <th>加購項目 Add-On Items</th>
+                                <th>日期 Date</th>
+                                <th>時間 Time</th>
+                                <th>數量 Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody class="tbody">
+                            <tr>
+                                <td>沒有加購項目 No Add-On Items</td>
+                                <td></td>
+                                <td></td>
+                                <td>----</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="swiper-slide eachticket voucher">
+                <div class="upper">
+                    <div class="state_tag">Expired<br>已過期</div>
+                    <div class="upper-wrapper">
+                        <div class="keyvisual not-for-mobile">
+                            <div class="img_holder"><img src="imgs/keyv_v_1.png"></div>
+                        </div>
+                        <div class="keyvisual only-for-mobile"><img src="imgs/keyv_v_1_m.png"></div>
+                        <div class="detail_zone">
+                            <div class="logo"><img src="imgs/logo.png"></div>                
+                            <h2>Smart Fun Annual Pass <br>Gift Vocher<br>智紛全年入場證禮券</h2>
+
+                            <div class="identity"><img class="user_photo" src="imgs/user_photo01.jpg"><img class="qrcode" src="imgs/qrcode.jpg"><p>Non-refundable <br class="only-for-mobile"> 不作退款</p></div>
+                            <div class="voucher_code"><div><img src="imgs/barcode.svg">LBEPR0XWQ0005P &nbsp; PIN: KS4K</div></div>
+
+                            <p class="sublabel_dim">Voucher's Type 禮券類別</p>
+                            <p class="h3">Premium - Adult <br class="only-for-mobile"> 優越卡 - 成人 </p>
+
+                            <br>
+
+                            <div class="block">
+                                <p class="sublabel_dim">Voucher's Issuing Date <br> 禮券簽發日期</p>
+                                <p class="h3">15 Jun 2019</p>
+                                <br>
+                            </div>
+
+                            <div class="block">
+                                <p class="sublabel_dim">Voucher's Expiry Date <br> 禮券到期日</p>
+                                <p class="h3">15 Jun 2020</p>
+                                <br class="only-for-mobile">
+                            </div>
+
+
+
+                            <p class="sublabel_dim">Authorized Signature 授權簽名</p>
+                            <p class="h3"><img class="signature" src="imgs/signature.png"></p>
+
+                            <div class="tnc_link">
+                                <br>
+                                <div class="state_indicate hide">This ticket has used 1 day<br>此票證已使用1天</div>
+                                <a href="#tnc_eng">Terms and conditions</a> &nbsp; <a href="#tnc_chi">門票條款及細則</a>
+                                <span class="non_refundable">&nbsp; Non-refundable 不作退款</span>
+                                <br> 1234567890123456789 &nbsp; &nbsp; &nbsp; 123456789012345678901234
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lower no_addon">
+                    <table class="addon" >
+                        <thead>
+                            <tr>
+                                <th>加購項目 Add-On Items</th>
+                                <th>日期 Date</th>
+                                <th>時間 Time</th>
+                                <th>數量 Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody class="tbody">
+                            <tr>
+                                <td>沒有加購項目 No Add-On Items</td>
+                                <td></td>
+                                <td></td>
+                                <td>----</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="swiper-slide eachticket smartfun-membertype1">
+                <div class="upper">
+                    <div class="state_tag">Expired<br>已過期</div>
+                    <div class="upper-wrapper">
+                        <div class="keyvisual not-for-mobile">
+                            <div class="img_holder"><img src="imgs/keyv_p_1.png"></div>
+                        </div>
+                        <div class="keyvisual only-for-mobile"><img src="imgs/keyv_p_1_m.png"></div>
+                        <div class="detail_zone">
+                            <div class="logo"><img src="imgs/logo.png"></div>                
+                            <h2>Smart Fun Annual Pass<br>智紛全年入場證</h2>
+
+                            <div class="identity"><img class="user_photo" src="imgs/user_photo01.jpg"><img class="qrcode" src="imgs/qrcode.jpg"><p>Non-refundable <br class="only-for-mobile"> 不作退款</p></div>
+                            <div class="voucher_code"><div><img src="imgs/barcode.svg">LBEPR0XWQ0005P &nbsp; PIN: KS4K</div></div>
+
+                            <p class="sublabel_dim">Member Name 會員姓名</p>
+                            <p class="h3">Cheung Ka Man</p>
+
+                            <br>
+
+                            <p class="sublabel_dim">Member Number 會員編號</p>
+                            <p class="h3">LBEPR0XQW005P</p>
+
+                            <br>
+
+                            <p class="sublabel_dim">Pass Type 入場證類別</p>
+                            <p class="h3">Premium - Adult 優越卡 - 成人 </p>
+
+                            <br>
+
+                            <div class="block">
+                                <p class="sublabel_dim">Voucher's Issuing Date <br> 禮券簽發日期</p>
+                                <p class="h3">15 Jun 2019</p>
+                            </div>
+
+                            <div class="block">
+                                <p class="sublabel_dim">Voucher's Expiry Date <br> 禮券到期日</p>
+                                <p class="h3">15 Jun 2020</p>
+                            </div>
+
+                            <div class="tnc_link">
+                                <br>
+                                <div class="state_indicate hide">This ticket has used 1 day<br>此票證已使用1天</div>
+                                <a href="#tnc_eng">Terms and conditions</a> &nbsp; <a href="#tnc_chi">門票條款及細則</a>
+                                <span class="non_refundable">&nbsp; &nbsp; &nbsp;  <br class="only-for-mobile"> Non-refundable 不作退款</span>
+                                <br> 1234567890123456789 &nbsp; &nbsp; &nbsp; 123456789012345678901234
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lower no_addon">
+                    <table class="addon" >
+                        <thead>
+                            <tr>
+                                <th>加購項目 Add-On Items</th>
+                                <th>日期 Date</th>
+                                <th>時間 Time</th>
+                                <th>數量 Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody class="tbody">
+                            <tr>
+                                <td>沒有加購項目 No Add-On Items</td>
+                                <td></td>
+                                <td></td>
+                                <td>----</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+        </div>
+
+        <!-- Add Pagination -->        
+        <div class="swiper-pagination swiper-pagination-white"></div>
+        
+        <div class="tnc_container">
+            <div class="tnc_block" id="tnc_eng">
+                <u>Terms and conditions</u>
+                <ul>
+                    <li>You can order general admission tickets for the next 90 days.</li>
+                    <li>The ticket is non-transferable, non-exchangeable and non-refundable.</li>
+                    <li>Physical admission ticket holders must present their personal identification documents as stated above at the Park’s turnstile for verification. E-ticket holders must present e-ticket, the above- mentioned identification document and the credit card used for the purchase of tickets for verification upon admission.</li>
+                    <li>A maximum of 10 tickets can be purchased per transaction per credit card.</li>
+                    <li>A maximum of 4 transactions can be made per credit card per day.</li>
+                    <li>For your protection, Verified by Visa and MasterCard®SecureCodeTM is available if you have registered with your payment card issuing bank for this service.</li>
+                    <li>Children aged 11 or below must be accompanied by a person aged 15 or above.</li>
+                    <li>Free admission is granted to children under 3-year-old and local senior residents, who is 65 years old or above with Hong Kong Identity Card or the "Senior Citizen Card" issued by Social Welfare Department. Holder of Registration Card for people with Disabilities and Hong Kong residents with Hong Kong Identity Card visiting on birthday are FREE to enter Ocean Park.</li>
+                    <li>Day time tickets are restricted to day-opening-times. Night tickets have to be purchased separately for special night events.</li>
+                    <li>If you choose to receive tickets by courier, additional charge for courier service is applicable.</li>
+                    <li>If you choose to print the admission tickets immediately, you may do so upon successful payment.</li>
+                    <li>A notification email will be sent to you to acknowledge receipt of your ticket order.</li>
+                    <li>The ticket will be void if altered or defaced.</li>
+                    <li>For repair, maintenance, inclement weather or other reason, Ocean Park may suspend the operation of any ride or close any attraction at any time without prior notice. It is a condition of sale of the Park’s admission ticket that any request for refund, whether partial or in full, for the tickets purchased by visitors will not be considered by the Park as a result of such ride suspension or closure of attraction.</li>
+                    <li>The Park reserves the right to amend these Terms and Conditions at any time without prior notice.</li>
+                    <li>In the event of dispute, the decision of Ocean Park will be final.</li>
+                    <li>If you have any enquiries, please contact us at <a href="tel:85239232323">(852) 3923 2323</a> or send email to gr@oceanpark.com.hk.</li>
+                </ul>
+            </div>
+            <div class="tnc_block" id="tnc_chi">
+                <u>條款及細則</u>
+                <ul>
+                    <li>您可訂購未來90日內之普通日間門票。</li>
+                    <li>門票不得退款、轉讓或退換。</li>
+                    <li>持實體門票人士進園時請出示上述之個人身份證明文件以作核對。於網站購票人士進園時須出示電子門票、上述之個人身份證明文件及購票所用之信用卡作核對之用。</li>
+                    <li>每張信用卡在每次交易中最多可訂購10張門票。</li>
+                    <li>每張信用卡每天接受最多4次交易。</li>
+                    <li>為了加添您在網上購票的保障，我們備有Visa驗證服務和MasterCard® SecureCodeTM服務。</li>
+                    <li>十一歲或以下小童必須由十五歲或以上之人士陪同。</li>
+                    <li>3歲以下、持香港身份證明文件之65歲或以上本港居民、「殘疾人士登記證」人士及本港居民生日當天均可免費進場。</li>
+                    <li>日間入場門票只適用於日間開放時間，如欲感受晚間特別盛會，須另行購買門票。</li>
+                    <li>如選擇郵政速遞取票，閣下需支付有關郵費。</li>
+                    <li>如您選擇即時列印入場門票，請在交易完成後進行。</li>
+                    <li>客戶在完成訂購後將收到一個通知電郵以確認我們收到您的門票訂購。</li>
+                    <li>門票一經修改或損壞毀即作廢。</li>
+                    <li>海洋公園會因維修，保養，惡劣天氣或其他理由，在任何時間內關閉園內機動遊戲或景點而不作事先通知。遊客根據前述情況所作出的退款要求，不論全數或部份款項，將不作受理。此乃本園門票售賣條款之一。</li>
+                    <li>海洋公園保留隨時修訂本使用條款及細則的權利，而毋須另行通知。</li>
+                    <li>如有任何爭議，將以海洋公園之決定為準。</li>
+                    <li>如有任何問題，請致電 <a href="tel:85239232323">(852) 3923 2323</a> 或電郵至gr@oceanpark.com.hk。</li>
+                </ul>                
+            </div>
+        </div><!-- End .tnc_container -->
+        
+        <div class="footer">
+            <img class="footer_logo" src="imgs/footer_img_nature.jpg">
+        </div>
+    </div>
+    
+    <!-- Swiper JS -->
+    <script src="js/swiper.min.js"></script>
+
+    <!-- Initialize Swiper -->
+    <script>
+        // var appendNumber = 10;
+        // var prependNumber = 1;
+        function initswiper(){
+            console.log("initswiper");
+            var swiper = new Swiper('.swiper-container', {
+              slidesPerView: 1.1,
+              centeredSlides: true,
+              spaceBetween: 12,
+              pagination: {
+                el: '.swiper-pagination',
+                  /*dynamicBullets: true,*/
+                  clickable: true,
+              },
+                breakpoints: {
+                    // when window width is <= 320px
+                    320: {
+                        slidesPerView: 1.1,
+                        spaceBetween: 8
+                    },
+                    // when window width is <= 412px
+                    412: {
+                        slidesPerView: 1.15,
+                        spaceBetween: 12
+                    },
+                    // when window width is <= 640px
+                    640: {
+                        slidesPerView: 1.2,
+                        spaceBetween: 14
+                    }
+                }
+            });
+        };
+
+        var userAgent = navigator.userAgent.toLowerCase();
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
+        const isTablet = /(ipad|tablet|(android(?!.*mobile))|(windows(?!.*phone)(.*touch))|kindle|playbook|silk|(puffin(?!.*(IP|AP|WP))))/.test(userAgent);
+        const within640 = (screen.width <= 640) ? true : false ;
+        if( isMobile ) {
+            // initswiper();
+            if( !isTablet ) {
+                // console.log('= mobile');
+                initswiper();
+            }else if ( within640 ){
+                // console.log('= mobile & Tablet Gap');
+                initswiper();
+            };
+        };
+        // alert("isMobile="+isMobile+" isTablet="+isTablet+" within640="+within640+"\n\n"+userAgent+"\n\n"+ screen.width);
+      
+    </script>
+      
+</body>
+</html>
